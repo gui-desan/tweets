@@ -10,9 +10,19 @@
   </head>
 
   <body>
+    <%= render "shared/nav" %>
+
     <div class="container">
-      <div class="row">
-        <%= yield %>
+      <div class="row my-3">
+        <%- if controller_path.split("/").first == "users" %>
+          <div class="col-sm-8 col-md-6 col-lg-4 mx-auto">
+            <%= yield %>
+          </div>
+        <% elsif %>
+          <div class="col-sm-8 col-md-6 col-lg-4 mx-auto">
+            <%= yield %>
+          </div>
+        <% end %>
       </div>
     </div>
   </body>
