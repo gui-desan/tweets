@@ -1,1 +1,19 @@
-test
+<div class="row">
+  <div class="col-md-12">
+    <%= form_for :tweet, url: tweets_path, method: :post do |f| %>
+      <div class="form-group">
+        <%= f.label :content, "What do you think now?" %>
+        <%= f.text_area :content, class: "form-control", rows: 5, placeholder: "Write here..." %>
+      </div>
+      <%= f.submit "Tweet", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<hr />
+
+<div class="row">
+  <div class="col-md-12">
+    <%= render "tweets", tweets: @tweets %>
+  </div>
+</div>
