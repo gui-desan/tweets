@@ -5,6 +5,18 @@
       <label class="text-secondary"><small><%= tweet.created_at %></small></label>
       <hr />
       <p class="card-text"><%= tweet.content %></p>
+      <hr />
+      <% unless tweet.users.include?(current_user) %>
+        <%= link_to "Like", tweet_likes_path(tweet), method: :post, class: "text-danger" %>
+      <% else %>
+        <%=
+          link_to "Unlike",
+          tweet_like_path(tweet, tweet.likes.find_by(user_id: current_user.id)),
+          method: :delete,
+          class: "text-danger"
+        %>
+      <% end %>
+      <%= tweet.likes.count %>
     </div>
   </div>
 <% end %>
