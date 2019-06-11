@@ -1,24 +1,10 @@
 <% tweets.each do |tweet| %>
-  <div class="card" style="width: 18rem;">
+  <div class="card mb-3">
     <div class="card-body">
-      <h5 class="card-title"><%= tweet.user.name %></h5>
+      <h5 class="card-title"><%= tweet.user.email %></h5>
+      <label class="text-secondary"><small><%= tweet.created_at %></small></label>
+      <hr />
       <p class="card-text"><%= tweet.content %></p>
-      <label><small><%= tweet.created_at %></small></label>
-
-      <br />
-      <%= link_to "Reply", new_tweet_reply_path(tweet), class: "btn btn-info" %>
-      <%= link_to "Retweet", new_tweet_retweet_path(tweet), class: "btn btn-info" %>
-      <%= link_to "Like", tweet_likes_path(tweet), method: :post, class: "btn btn-info" unless tweet.users.include?(current_user) %>
-
-      <% Tweet.replies(tweet.id).each do |reply| %>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"><%= reply.user.name %></h5>
-            <p class="card-text"><%= reply.content %></p>
-            <label><small><%= reply.created_at %></small></label>
-          </div>
-        </div>
-      <% end %>
     </div>
   </div>
 <% end %>
