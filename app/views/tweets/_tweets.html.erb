@@ -1,5 +1,8 @@
 <% tweets.each do |tweet| %>
-  <div class="card mb-3">
+  <div
+    class="card <%= reply ? "mt-3" : "mb-3" %>"
+    style="background-color: <%= layer % 2 == 1 ? "#f5f5ff" : "#ddddff" %>"
+  >
     <div class="card-body">
       <h5 class="card-title"><%= tweet.user.email %></h5>
       <label class="text-secondary"><small><%= tweet.created_at %></small></label>
@@ -17,10 +20,15 @@
         %>
       <% end %>
       <%= tweet.likes.count %>
+
+      <%= link_to "Reply", new_tweet_reply_path(tweet), class: "text-primary" %>
+      <%= Tweet.replies(tweet.id).count %>
+
+      <%= render "tweets", tweets: Tweet.replies(tweet.id), reply: true, layer: layer + 1 %>
     </div>
   </div>
 <% end %>
-<% if tweets.empty? %>
+<% if tweets.empty? && !reply %>
   <div class="h4 text-center">
     So quiet here ฅ(Φ ω Φ)ฅ, tweet someting.
   </div>

@@ -2,7 +2,7 @@ class TweetsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @tweets = Tweet.all.order(created_at: :desc)
+    @tweets = Tweet.threads.order(created_at: :desc)
   end
 
   def create
@@ -12,7 +12,7 @@ class TweetsController < ApplicationController
     else
       flash[:fail] = @tweet.errors.messages
     end
-    redirect_to action: :index
+    redirect_to root_path
   end
 
   private
