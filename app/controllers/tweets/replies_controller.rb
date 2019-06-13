@@ -1,13 +1,13 @@
 class Tweets::RepliesController < ApplicationController
   before_action :authenticate_user!
-  
+
   def new
     @tweet = Tweet.find(params[:tweet_id])
   end
 
   def create
     @tweet = Tweet.find(params[:tweet_id])
-    @tweet = Tweet.create(reply_params)
+    @tweet = @tweet.replies.create(reply_params)
     if @tweet.valid?
       flash[:success] = 'Create successfull.'
       redirect_to root_path
@@ -20,9 +20,6 @@ class Tweets::RepliesController < ApplicationController
   private
 
   def reply_params
-    params.require(:reply).permit(:content).merge!(
-      user_id: current_user.id,
-      tweet_id: params[:tweet_id]
-    )
+    params.require(:reply).permit(:content).merge!(user_id: current_user.id)
   end
 end

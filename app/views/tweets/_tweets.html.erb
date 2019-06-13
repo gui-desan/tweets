@@ -22,9 +22,9 @@
       <%= tweet.likes.count %>
 
       <%= link_to "Reply", new_tweet_reply_path(tweet), class: "text-primary" %>
-      <%= Tweet.replies(tweet.id).count %>
+      <%= tweet.replies.count %>
 
-      <%= render "tweets", tweets: Tweet.replies(tweet.id), reply: true, layer: layer + 1 %>
+      <%= render "tweets", tweets: tweet.replies, reply: true, layer: layer + 1 %>
     </div>
   </div>
 <% end %>
