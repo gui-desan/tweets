@@ -2,7 +2,7 @@ class TweetsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @tweets = Tweet.threads.order(created_at: :desc)
+    @tweets = Tweet.threads.includes(:replies, :likes, :users).order(created_at: :desc)
   end
 
   def create

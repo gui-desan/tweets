@@ -1,7 +1,7 @@
 class Tweet < ApplicationRecord
   belongs_to :user
-  belongs_to :reply, :class_name => "Tweet"
-  belongs_to :retweet, :class_name => "Tweet"
+  belongs_to :reply, :foreign_key => "tweet_id", :class_name => "Tweet", optional: true
+  belongs_to :retweet, :foreign_key => "retweet_id", :class_name => "Tweet", optional: true
   has_many :likes
   has_many :users, through: :likes
   has_many :replies, :foreign_key => "tweet_id", :class_name => "Tweet"

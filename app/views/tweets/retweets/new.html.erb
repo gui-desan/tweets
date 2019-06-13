@@ -1,2 +1,19 @@
-<h1>Tweets::Retweets#new</h1>
-<p>Find me in app/views/tweets/retweets/new.html.erb</p>
+<div class="row">
+  <div class="col">
+    <%= form_for :retweet, url: tweet_retweets_path(@tweet), method: :post do |f| %>
+      <div class="form-group">
+        <%= f.label :content, "Retweet from " %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= @tweet.user.email %></h5>
+            <label class="text-secondary"><small><%= @tweet.created_at %></small></label>
+            <hr />
+            <p class="card-text"><%= @tweet.content %></p>
+            <%= f.text_area :content, class: "form-control", rows: 5, placeholder: "Write content here..." %>
+            <%= f.submit "Retweet", class: "btn btn-primary mt-3" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
