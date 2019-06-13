@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :retweets, module: :tweets, only: [:new, :create]
   end
 
+  resources :hash_tags, only: [:show]
+
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords',

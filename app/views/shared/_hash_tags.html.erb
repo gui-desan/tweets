@@ -1,0 +1,9 @@
+<h4>Top 10 popular tags</h4>
+<% if @hash_tags.empty? %>
+  There aren't any hashtags currently
+<% else %>
+  <% @hash_tags.each do |hash_tag| %>
+    <%= link_to hash_tag.name, hash_tag_path(hash_tag.name) %><span class="text-secondary ml-2"><%= hash_tag.count %></span>
+    <br />
+  <% end %>
+<% end %>

@@ -1,0 +1,7 @@
+<div class="row">
+  <div class="col">
+    <h1><%= @hash_tag.name %></h1>
+    <br />
+    <%= render "tweets/shared/tweets", tweets: @hash_tag.tweets, layer: 0 %>
+  </div>
+</div>

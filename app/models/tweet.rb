@@ -15,4 +15,20 @@ class Tweet < ApplicationRecord
   scope :threads, -> { where(tweet_id: nil) }
   scope :replies, -> { where.not(tweet_id: nil) }
   scope :retweets, -> { where.not(retweed_id: nil) }
+
+  after_create :set_hash_tag
+
+  def set_hash_tag
+    content.gsub(/\B#\w*[a-zA-Z]+\w*/).map do |hash_tag|
+      if HashTag.exists?(name: hash_tag)
+        @hash_tag = HashTag.find_by(name: hash_tag)
+        @hash_tag.count += 1
+        @hash_tag.save
+      else
+        HashTag.create(name: hash_tag)
+      end
+      hash_tags << hash_tag
+    end
+    save
+  end
 end
