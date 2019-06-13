@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'tweets#index'
 
-  resources :tweets, only: [:index, :create] do
+  resources :tweets, only: [:index, :create, :show] do
     resources :likes, module: :tweets, only: [:create, :destroy]
     resources :replies, module: :tweets, only: [:new, :create]
     resources :retweets, module: :tweets, only: [:new, :create]

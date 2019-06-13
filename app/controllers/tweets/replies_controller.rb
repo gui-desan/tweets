@@ -10,7 +10,7 @@ class Tweets::RepliesController < ApplicationController
     @tweet = @tweet.replies.create(reply_params)
     if @tweet.valid?
       flash[:success] = 'Create successfull.'
-      redirect_to root_path
+      redirect_to tweet_path(params[:tweet_id])
     else
       flash[:fail] = @tweet.errors.messages
       redirect_to new_tweet_reply_path

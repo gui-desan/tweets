@@ -10,7 +10,7 @@ class Tweets::RetweetsController < ApplicationController
     @tweet = @tweet.retweets.create(retweet_params)
     if @tweet.valid?
       flash[:success] = 'Create successfull.'
-      redirect_to root_path
+      redirect_to tweet_path(@tweet.id)
     else
       flash[:fail] = @tweet.errors.messages
       redirect_to new_tweet_retweet_path

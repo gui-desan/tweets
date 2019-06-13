@@ -2,17 +2,23 @@ class TweetsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @tweets = Tweet.threads.includes(:replies, :likes, :users).order(created_at: :desc)
+    @tweets = Tweet.threads.order(created_at: :desc)
   end
 
   def create
     @tweet = Tweet.create(tweets_params)
     if @tweet.valid?
       flash[:success] = 'Create successfull.'
+      redirect_to tweet_path(@tweet.id)
     else
       flash[:fail] = @tweet.errors.messages
+      redirect_to root_path
     end
-    redirect_to root_path
+    
+  end
+
+  def show
+    @tweet = Tweet.find(params[:id])
   end
 
   private

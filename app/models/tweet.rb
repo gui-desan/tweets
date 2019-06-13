@@ -12,6 +12,7 @@ class Tweet < ApplicationRecord
     too_long: '%{count} characters is the maximum allowed'
   }, presence: true
 
+  default_scope { all.includes(:replies, :likes, :users) }
   scope :threads, -> { where(tweet_id: nil) }
   scope :replies, -> { where.not(tweet_id: nil) }
   scope :retweets, -> { where.not(retweed_id: nil) }

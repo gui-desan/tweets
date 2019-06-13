@@ -13,6 +13,7 @@
     <div class="card-body">
       <h5 class="card-title"><%= tweet.user.email %></h5>
       <label class="text-secondary"><small><%= tweet.created_at %></small></label>
+      <%= link_to "View", tweet_path(tweet.id) unless current_page?(tweet_path(tweet.id)) %>
       <hr />
       <%= render "tweets/shared/content", tweet: tweet %>
       <% unless retweet.nil? %>
@@ -23,6 +24,7 @@
           <div class="card-body">
             <h5 class="card-title"><%= retweet.user.email %></h5>
             <label class="text-secondary"><small><%= retweet.created_at %></small></label>
+            <%= link_to "View", tweet_path(retweet.id) %>
             <hr />
             <%= render "tweets/shared/content", tweet: retweet %>
           </div>
@@ -49,11 +51,7 @@
         <%= retweets.count %>
       <% end %>
 
-      <%=
-        render "tweets/shared/tweets",
-        tweets: replies.includes(:replies, :likes, :users),
-        layer: layer + 1
-      %>
+      <%= render "tweets/shared/tweets", tweets: replies, layer: layer + 1 %>
     </div>
   </div>
 <% end %>
