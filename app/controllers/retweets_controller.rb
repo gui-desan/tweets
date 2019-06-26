@@ -1,4 +1,6 @@
-class Tweets::RetweetsController < ApplicationController
+# frozen_string_literal: true
+
+class RetweetsController < ApplicationController
   before_action :authenticate_user!
 
   def new
@@ -7,13 +9,12 @@ class Tweets::RetweetsController < ApplicationController
 
   def create
     @tweet = Tweet.threads.find(params[:tweet_id])
-    @tweet = @tweet.retweets.create(retweet_params)
-    if @tweet.valid?
-      flash[:success] = 'Create successfull.'
-      redirect_to tweet_path(@tweet.id)
+    @retweet = @tweet.retweets.create(retweet_params)
+    if @retweet.valid?
+      redirect_to root_path
     else
-      flash[:fail] = @tweet.errors.messages
-      redirect_to new_tweet_retweet_path
+      flash[:fail] = @retweet.errors.messages
+      render :new
     end
   end
 

@@ -1,2 +1,0 @@
-module Tweets::LikesHelper
-end

@@ -18,14 +18,25 @@ class Tweet < ApplicationRecord
   scope :retweets, -> { where.not(retweet_id: nil) }
 
   after_create :set_hash_tag
+  before_destroy :unset_hash_tag
 
   def set_hash_tag
-    content.gsub(/\B#\w*[a-zA-Z]+\w*/).map do |hash_tag|
-      @hash_tag = HashTag.find_or_create_by(name: hash_tag)
-      @hash_tag.count += 1
-      @hash_tag.save
-      hash_tags << @hash_tag
+    content.gsub(/\B#\w*[a-zA-Z]+\w*/).uniq.map do |hash_tag|
+      hash_tag = HashTag.find_or_create_by(name: hash_tag)
+      hash_tag.count += 1
+      hash_tag.save
+      hash_tags << hash_tag
     end
+    save
+  end
+
+  def unset_hash_tag
+    content.gsub(/\B#\w*[a-zA-Z]+\w*/).uniq.map do |hash_tag|
+      hash_tag = HashTag.find_by(name: hash_tag)
+      hash_tag.count -= 1
+      hash_tag.save
+    end
+    HashTag.where('count = 0').destroy_all
     save
   end
 end

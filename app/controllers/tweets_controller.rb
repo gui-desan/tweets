@@ -4,19 +4,17 @@ class TweetsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @tweets = Tweet.threads.loads.order(created_at: :desc)
-    flash[:fail] ||= {}
-    flash[:params] ||= {}
+    @tweets = Tweet.threads.loads
   end
 
   def create
-    @tweet = Tweet.create(tweets_params)
-    if @tweet.valid?
-      redirect_to tweet_path(@tweet.id)
-    else
-      flash[:fail] = @tweet.errors.map { |k, v| [k, "#{k} #{v}".capitalize] }.to_h
-      flash[:params] = tweets_params
+    @t = Tweet.create(tweets_params)
+    if @t.valid?
       redirect_to root_path
+    else
+      flash[:fail] = @t.errors.messages
+      @tweets = index
+      render :index
     end
   end
 
