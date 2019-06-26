@@ -10,16 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_13_030508) do
+ActiveRecord::Schema.define(version: 2019_06_25_093840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "hash_tags", force: :cascade do |t|
     t.string "name"
-    t.bigint "count", default: 1
+    t.integer "count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_hash_tags_on_name"
+  end
+
+  create_table "hash_tags_tweets", id: false, force: :cascade do |t|
+    t.bigint "tweet_id"
+    t.bigint "hash_tag_id"
+    t.index ["hash_tag_id"], name: "index_hash_tags_tweets_on_hash_tag_id"
+    t.index ["tweet_id"], name: "index_hash_tags_tweets_on_tweet_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -33,12 +41,13 @@ ActiveRecord::Schema.define(version: 2019_06_13_030508) do
 
   create_table "tweets", force: :cascade do |t|
     t.bigint "user_id"
+    t.bigint "reply_id"
+    t.bigint "retweet_id"
     t.string "content", limit: 256
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "tweet_id"
-    t.bigint "retweet_id"
-    t.string "hash_tags", default: [], null: false, array: true
+    t.index ["reply_id"], name: "index_tweets_on_reply_id"
+    t.index ["retweet_id"], name: "index_tweets_on_retweet_id"
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end
 
@@ -50,9 +59,19 @@ ActiveRecord::Schema.define(version: 2019_06_13_030508) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "firstname"
+    t.string "lastname"
+    t.string "gender", default: "0"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "tweets", "users"
+  add_foreign_key "hash_tags_tweets", "hash_tags"
+  add_foreign_key "hash_tags_tweets", "tweets", on_delete: :cascade
+  add_foreign_key "likes", "tweets", on_delete: :cascade
+  add_foreign_key "likes", "users", on_delete: :cascade
+  add_foreign_key "tweets", "tweets", column: "reply_id", on_delete: :cascade
+  add_foreign_key "tweets", "tweets", column: "retweet_id", on_delete: :nullify
+  add_foreign_key "tweets", "users", on_delete: :cascade
 end

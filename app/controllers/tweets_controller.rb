@@ -1,24 +1,27 @@
+# frozen_string_literal: true
+
 class TweetsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @tweets = Tweet.threads.order(created_at: :desc)
+    @tweets = Tweet.threads.loads.order(created_at: :desc)
+    flash[:fail] ||= {}
+    flash[:params] ||= {}
   end
 
   def create
     @tweet = Tweet.create(tweets_params)
     if @tweet.valid?
-      flash[:success] = 'Create successfull.'
       redirect_to tweet_path(@tweet.id)
     else
-      flash[:fail] = @tweet.errors.messages
+      flash[:fail] = @tweet.errors.map { |k, v| [k, "#{k} #{v}".capitalize] }.to_h
+      flash[:params] = tweets_params
       redirect_to root_path
     end
-    
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
+    @tweet = Tweet.loads.find(params[:id])
   end
 
   private

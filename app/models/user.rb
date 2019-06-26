@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -6,4 +8,8 @@ class User < ApplicationRecord
 
   has_many :likes
   has_many :tweets, through: :likes
+
+  enum gender: %i[undefined male female]
+
+  validates :name, :firstname, :lastname, presence: true
 end

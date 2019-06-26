@@ -1,7 +1,7 @@
 <p class="card-text">
   <%
-    tweet.hash_tags.each do |hash_tag|
-      tweet.content.gsub!(hash_tag, "#{link_to hash_tag, hash_tag_path(hash_tag)}")
+    tweet.hash_tags.each do |h|
+      tweet.content.gsub!(h.name, "#{link_to h.name, hash_tag_path(h.name)}")
     end
   %>
   <%= tweet.content.html_safe %>

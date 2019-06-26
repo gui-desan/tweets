@@ -3,7 +3,15 @@
     <%= form_for :tweet, url: tweets_path, method: :post do |f| %>
       <div class="form-group">
         <%= f.label :content, "What do you think now?" %>
-        <%= f.text_area :content, class: "form-control", rows: 5, placeholder: "Write here..." %>
+        <%= f.text_area :content,
+            class: "form-control #{"is-invalid" if flash[:fail]["content"]}",
+            rows: 5,
+            placeholder: "Write here...",
+            value: flash[:params]["content"]
+        %>
+        <div class="invalid-feedback">
+          <%= flash[:fail]["content"] %>
+        </div>
       </div>
       <%= f.submit "Tweet", class: "btn btn-primary" %>
     <% end %>

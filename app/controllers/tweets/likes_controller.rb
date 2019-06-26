@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Tweets::LikesController < ApplicationController
   before_action :authenticate_user!
 
