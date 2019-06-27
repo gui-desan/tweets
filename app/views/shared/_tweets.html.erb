@@ -50,7 +50,16 @@
         <%= retweets.size %>
       <% end %>
 
-      <%= render "shared/tweets", tweets: replies.loads.order(created_at: :asc), layer: layer + 1 %>
+      <%=
+        render "shared/tweets",
+        tweets: replies.includes(
+          :replies,
+          :retweets,
+          :users,
+          :hash_tags
+        ).order(created_at: :asc),
+        layer: layer + 1
+      %>
     </div>
   </div>
 <% end %>

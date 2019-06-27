@@ -4,7 +4,13 @@ class TweetsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @tweets = Tweet.threads.loads
+    user_ids = current_user.followees.pluck(:id).push(current_user.id)
+    @tweets = Tweet.threads.where(user_id: user_ids).includes(
+      :replies,
+      :retweets,
+      :users,
+      :hash_tags
+    )
   end
 
   def create
@@ -19,7 +25,12 @@ class TweetsController < ApplicationController
   end
 
   def show
-    @tweet = Tweet.loads.find(params[:id])
+    @tweet = Tweet.includes(
+      :replies,
+      :retweets,
+      :users,
+      :hash_tags
+    ).find(params[:id])
   end
 
   private

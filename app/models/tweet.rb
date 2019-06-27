@@ -12,7 +12,6 @@ class Tweet < ApplicationRecord
 
   validates :content, length: { maximum: 256 }, presence: true
 
-  scope :loads, -> { includes(:replies, :retweets, :users, :hash_tags) }
   scope :threads, -> { where(reply_id: nil) }
   scope :replies, -> { where.not(reply_id: nil) }
   scope :retweets, -> { where.not(retweet_id: nil) }
@@ -23,7 +22,7 @@ class Tweet < ApplicationRecord
   def set_hash_tag
     content.gsub(/\B#\w*[a-zA-Z]+\w*/).uniq.map do |hash_tag|
       hash_tag = HashTag.find_or_create_by(name: hash_tag)
-      hash_tag.count += 1
+      hash_tag.tag_count += 1
       hash_tag.save
       hash_tags << hash_tag
     end
@@ -33,10 +32,10 @@ class Tweet < ApplicationRecord
   def unset_hash_tag
     content.gsub(/\B#\w*[a-zA-Z]+\w*/).uniq.map do |hash_tag|
       hash_tag = HashTag.find_by(name: hash_tag)
-      hash_tag.count -= 1
+      hash_tag.tag_count -= 1
       hash_tag.save
     end
-    HashTag.where('count = 0').destroy_all
+    HashTag.where('tag_count = 0').destroy_all
     save
   end
 end

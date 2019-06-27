@@ -4,7 +4,7 @@ class CreateHashTags < ActiveRecord::Migration[5.2]
   def change
     create_table :hash_tags do |t|
       t.string :name
-      t.integer :count, default: 0
+      t.integer :tag_count, default: 0
       t.timestamps
 
       t.index :name

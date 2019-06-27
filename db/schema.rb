@@ -10,14 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_26_081450) do
+ActiveRecord::Schema.define(version: 2019_06_27_183132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "follows", force: :cascade do |t|
+    t.bigint "follower_id"
+    t.bigint "followee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followee_id"], name: "index_follows_on_followee_id"
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
   create_table "hash_tags", force: :cascade do |t|
     t.string "name"
-    t.integer "count", default: 0
+    t.integer "tag_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_hash_tags_on_name"
@@ -40,15 +49,15 @@ ActiveRecord::Schema.define(version: 2019_06_26_081450) do
   end
 
   create_table "relationships", force: :cascade do |t|
-    t.bigint "user1_id"
-    t.bigint "user2_id"
+    t.bigint "requester_id"
+    t.bigint "requestee_id"
     t.string "type", default: "0"
     t.string "smallint", default: "0"
     t.string "status", default: "0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user1_id"], name: "index_relationships_on_user1_id"
-    t.index ["user2_id"], name: "index_relationships_on_user2_id"
+    t.index ["requestee_id"], name: "index_relationships_on_requestee_id"
+    t.index ["requester_id"], name: "index_relationships_on_requester_id"
   end
 
   create_table "tweets", force: :cascade do |t|
@@ -79,12 +88,14 @@ ActiveRecord::Schema.define(version: 2019_06_26_081450) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "follows", "users", column: "followee_id", on_delete: :cascade
+  add_foreign_key "follows", "users", column: "follower_id", on_delete: :cascade
   add_foreign_key "hash_tags_tweets", "hash_tags"
   add_foreign_key "hash_tags_tweets", "tweets", on_delete: :cascade
   add_foreign_key "likes", "tweets", on_delete: :cascade
   add_foreign_key "likes", "users", on_delete: :cascade
-  add_foreign_key "relationships", "users", column: "user1_id", on_delete: :cascade
-  add_foreign_key "relationships", "users", column: "user2_id", on_delete: :cascade
+  add_foreign_key "relationships", "users", column: "requestee_id", on_delete: :cascade
+  add_foreign_key "relationships", "users", column: "requester_id", on_delete: :cascade
   add_foreign_key "tweets", "tweets", column: "reply_id", on_delete: :cascade
   add_foreign_key "tweets", "tweets", column: "retweet_id", on_delete: :nullify
   add_foreign_key "tweets", "users", on_delete: :cascade

@@ -4,7 +4,7 @@
 <% else %>
   <% @hash_tags.each do |hash_tag| %>
     <%= link_to hash_tag.name, hash_tags_show_path(hash_tag.name) %>
-    <span class="text-secondary"><%= hash_tag.count %></span>
+    <span class="text-secondary"><%= hash_tag.tag_count %></span>
     <br />
   <% end %>
 <% end %>
