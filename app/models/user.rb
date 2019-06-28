@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   enum gender: %i[undefined male female]
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :firstname, presence: true
   validates :lastname, presence: true
 end

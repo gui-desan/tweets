@@ -1,0 +1,19 @@
+<h4>Suggested users</h4>
+
+<% if @suggested_users.empty? %>
+  No suggestion
+<% else %>
+  <% @suggested_users.each do |suggested_user| %>
+    <div class="d-flex my-1">
+      <%=
+        link_to suggested_user.name, profiles_show_path(suggested_user.name),
+        class: "btn btn-sm btn-link"
+      %>
+      <div class="ml-auto">
+        <%= form_for :user, url: follows_create_path(suggested_user.name), method: :post do |f| %>
+          <%= f.submit "follow", class: "btn btn-sm btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

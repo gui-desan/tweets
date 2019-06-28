@@ -18,9 +18,12 @@ Rails.application.routes.draw do
 
   get 'hash_tags/:name', to: 'hash_tags#show', as: :hash_tags_show
 
-  get 'profile/edit', to: 'profiles#edit', as: :profiles_edit
-  get 'profile', to: 'profiles#show', as: :profiles_show
-  patch 'profile', to: 'profiles#update', as: :profiles_update
+  get 'profiles/:username/edit', to: 'profiles#edit', as: :profiles_edit
+  get 'profiles/:username', to: 'profiles#show', as: :profiles_show
+  patch 'profile/:username', to: 'profiles#update', as: :profiles_update
+
+  post 'profiles/:username/follow', to: 'follows#create', as: :follows_create
+  delete 'profiles/:username/follow', to: 'follows#destroy', as: :follow_destroy
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',

@@ -2,6 +2,15 @@
   <div class="col">
     <h1><%= @hash_tag.name %></h1>
     <br />
-    <%= render "shared/tweets", tweets: @hash_tag.tweets, layer: 0 %>
+    <%=
+      render "shared/tweets",
+      tweets: @hash_tag.tweets.includes(
+        :replies,
+        :retweets,
+        :users,
+        :hash_tags
+      ),
+      layer: 0
+    %>
   </div>
 </div>
