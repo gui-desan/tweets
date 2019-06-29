@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   patch 'profile/:username', to: 'profiles#update', as: :profiles_update
 
   post 'profiles/:username/follow', to: 'follows#create', as: :follows_create
-  delete 'profiles/:username/follow', to: 'follows#destroy', as: :follow_destroy
+  delete 'profiles/:username/follow', to: 'follows#destroy', as: :follows_destroy
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
