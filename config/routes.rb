@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   post 'relationships/:id/accept', to: 'relationships#accept', as: :relationships_accept
   delete 'relationships/:id/reject', to: 'relationships#reject', as: :relationships_reject
 
+  get 'games/life-simulator', to: 'games#life_simulator', as: :life_simulator_game
+
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords',
