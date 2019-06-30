@@ -3,6 +3,7 @@
     tweet.hash_tags.each do |h|
       tweet.content.gsub!(h.name, "#{link_to h.name, hash_tags_show_path(h.name)}")
     end
+    tweet.content.gsub!(/\r\n/, '<br>')
   %>
   <%= tweet.content.html_safe %>
 </p>
