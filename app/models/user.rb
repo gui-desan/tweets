@@ -17,9 +17,19 @@ class User < ApplicationRecord
   has_many :follows_from, foreign_key: 'followee_id', class_name: 'Follow'
   has_many :followers, through: :follows_from
 
+  has_many :relationships_to, foreign_key: 'requester_id', class_name: 'Relationship'
+  has_many :requestees, through: :relationships_to
+
+  has_many :relationships_from, foreign_key: 'requestee_id', class_name: 'Relationship'
+  has_many :requesters, through: :relationships_from
+
   enum gender: %i[undefined male female]
 
   validates :name, presence: true, uniqueness: true
   validates :firstname, presence: true
   validates :lastname, presence: true
+
+  def relationship
+    relationships_to.accepteds.first
+  end
 end

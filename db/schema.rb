@@ -51,9 +51,8 @@ ActiveRecord::Schema.define(version: 2019_06_27_183132) do
   create_table "relationships", force: :cascade do |t|
     t.bigint "requester_id"
     t.bigint "requestee_id"
-    t.string "type", default: "0"
-    t.string "smallint", default: "0"
-    t.string "status", default: "0"
+    t.integer "relationship_type", default: 0
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["requestee_id"], name: "index_relationships_on_requestee_id"
@@ -83,7 +82,7 @@ ActiveRecord::Schema.define(version: 2019_06_27_183132) do
     t.string "name"
     t.string "firstname"
     t.string "lastname"
-    t.integer "gender", limit: 2, default: 0
+    t.integer "gender", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

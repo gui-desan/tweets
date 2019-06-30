@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_suggestions
+    return unless current_user
+
     user_ids = current_user.followees.pluck(:id).push(current_user.id)
     @suggested_users = User.where.not(id: user_ids).order(Arel.sql('RANDOM()')).limit(3)
   end

@@ -25,6 +25,14 @@ Rails.application.routes.draw do
   post 'profiles/:username/follow', to: 'follows#create', as: :follows_create
   delete 'profiles/:username/follow', to: 'follows#destroy', as: :follows_destroy
 
+  post 'profiles/:username', to: 'relationships#create', as: :relationships_create
+  delete 'profiles/:username', to: 'relationships#destroy', as: :relationships_destroy
+  delete 'profiles/:username/cancel', to: 'relationships#cancel', as: :relationships_cancel
+
+  get 'relationships', to: 'relationships#index', as: :relationships_index
+  post 'relationships/:id/accept', to: 'relationships#accept', as: :relationships_accept
+  delete 'relationships/:id/reject', to: 'relationships#reject', as: :relationships_reject
+
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords',

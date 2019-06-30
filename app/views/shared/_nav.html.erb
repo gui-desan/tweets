@@ -14,17 +14,15 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <h6 class="dropdown-header">Profiles</h6>
             <%= link_to "My profile", profiles_show_path(current_user.name), class: "dropdown-item" %>
-            <%= link_to "Edit profile", root_path, class: "dropdown-item" %>
+            <%#= link_to "Edit profile", root_path, class: "dropdown-item" %>
             <div class="dropdown-divider"></div>
 
             <h6 class="dropdown-header">Relationships</h6>
-            <%= link_to "My relationship", root_path, class: "dropdown-item" %>
-            <%= link_to "My request", root_path, class: "dropdown-item" %>
-            <%= link_to "My history", root_path, class: "dropdown-item" %>
+            <%= link_to "My request", relationships_index_path, class: "dropdown-item" %>
             <div class="dropdown-divider"></div>
 
             <h6 class="dropdown-header">Mini games</h6>
-            <%= link_to "Tweet life", root_path, class: "dropdown-item" %>
+            <%= link_to "Life Simulator", root_path, class: "dropdown-item" %>
             <div class="dropdown-divider"></div>
             
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>

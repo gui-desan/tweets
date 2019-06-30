@@ -3,8 +3,8 @@ class CreateRelationships < ActiveRecord::Migration[5.2]
     create_table :relationships do |t|
       t.references :requester
       t.references :requestee
-      t.string :type, :smallint, default: 0
-      t.string :status, :smallint, default: 0
+      t.integer :relationship_type, default: 0
+      t.integer :status, default: 0
       t.timestamps
 
       t.foreign_key :users, column: :requester_id, on_delete: :cascade

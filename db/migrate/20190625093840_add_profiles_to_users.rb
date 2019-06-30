@@ -5,6 +5,6 @@ class AddProfilesToUsers < ActiveRecord::Migration[5.2]
     add_column :users, :name, :string
     add_column :users, :firstname, :string
     add_column :users, :lastname, :string
-    add_column :users, :gender, :smallint, default: 0
+    add_column :users, :gender, :integer, default: 0
   end
 end
