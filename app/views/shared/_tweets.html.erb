@@ -11,7 +11,7 @@
     style="background-color: <%= layer % 2 == 1 ? "#f5f5ff" : "#ddddff" %>"
   >
     <div class="card-body">
-      <h5 class="card-title"><%= tweet.user.name %></h5>
+      <h5 class="card-title"><%= link_to tweet.user.name, profiles_show_path(tweet.user.name) %></h5>
       <label class="text-secondary">
         <small><%= tweet.created_at.in_time_zone('Bangkok').strftime("%d %b %Y at %I:%M %p") %></small>
       </label>
@@ -24,7 +24,7 @@
           style="background-color: <%= layer % 2 == 0 ? "#f5f5ff" : "#ddddff" %>"
         >
           <div class="card-body">
-            <h5 class="card-title"><%= retweet.user.name %></h5>
+            <h5 class="card-title"><%= link_to retweet.user.name, profiles_show_path(retweet.user.name) %></h5>
             <label class="text-secondary">
               <small><%= retweet.created_at.in_time_zone('Bangkok').strftime("%d %b %Y at %I:%M %p") %></small>
             </label>
