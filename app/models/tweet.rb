@@ -16,6 +16,8 @@ class Tweet < ApplicationRecord
   scope :replies, -> { where.not(reply_id: nil) }
   scope :retweets, -> { where.not(retweet_id: nil) }
 
+  paginates_per 5
+
   after_create :set_hash_tag
   before_destroy :unset_hash_tag
 

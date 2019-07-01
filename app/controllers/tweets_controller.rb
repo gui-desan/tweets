@@ -10,7 +10,7 @@ class TweetsController < ApplicationController
       :retweets,
       :users,
       :hash_tags
-    )
+    ).page(params[:page])
   end
 
   def create
