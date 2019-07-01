@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FollowsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     followee_id = User.where.not(id: current_user.id).find_by(name: params[:username]).id
     current_user.follows_to.create(followee_id: followee_id)

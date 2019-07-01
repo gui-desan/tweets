@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RelationshipsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @requests = current_user.relationships_from.pendings.includes(:requester)
   end
