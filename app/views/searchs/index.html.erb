@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col">
+    <h1>Search results</h1>
+    <h3 class="mt-3">Users</h3>
+    <hr>
+    <% if @search_users.empty? %>
+      No results
+    <% else %>
+      <% @search_users.each do |user| %>
+        <%= link_to user.name, profiles_show_path(user.name) %><br>
+      <% end %>
+    <% end %>
+    <h3 class="mt-3">Hash tags</h3>
+    <hr>
+    <% if @search_hash_tags.empty? %>
+      No results
+    <% else %>
+      <% @search_hash_tags.each do |hash_tag| %>
+        <%= link_to hash_tag.name, hash_tags_show_path(hash_tag.name) %><br>
+      <% end %>
+    <% end %>
+  </div>
+</div>

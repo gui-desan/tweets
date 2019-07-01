@@ -215,7 +215,7 @@ $(document).ready(function () {
   }
 
   const addResult = res => {
-    result += `<br>${res}`
+    result += `<p>${res}</p>`
   }
 
   run()
