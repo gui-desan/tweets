@@ -10,9 +10,7 @@
         class: "btn btn-sm btn-link"
       %>
       <div class="ml-auto">
-        <%= form_for :user, url: follows_create_path(suggested_user.name), method: :post do |f| %>
-          <%= f.submit "follow", class: "btn btn-sm btn-primary" %>
-        <% end %>
+        <%= link_to "follow", follows_create_path(suggested_user.name), method: :post, class: "btn btn-sm btn-primary" %>
       </div>
     </div>
   <% end %>

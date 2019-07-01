@@ -8,12 +8,8 @@
       <% @requests.each do |request| %>
         <div class="d-flex align-items-center">
           <%= "#{request.requester.name} wants to become your #{request.relationship_type}." %>
-          <%= form_for :relationship, url: relationships_accept_path(request.id), method: :post do |f| %>
-            <%= f.submit "Accept", class: "btn btn-link ml-3" %>
-          <% end %>
-          <%= form_for :relationship, url: relationships_reject_path(request.id), method: :delete do |f| %>
-            <%= f.submit "Reject", class: "btn btn-link text-danger" %>
-          <% end %>
+          <%= link_to "Accept", relationships_accept_path(request.id), method: :post, class: "btn btn-link ml-3" %>
+          <%= link_to "Reject", relationships_reject_path(request.id), method: :delete, class: "btn btn-link text-danger" %>
         </div>
       <% end %>
     <% end %>

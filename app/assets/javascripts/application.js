@@ -20,20 +20,33 @@
 
 $(document).ready(function () {
   let state = 0
-  let result = ""
 
   const run = () => {
-    if (state == 0) {
+    if (state == -1) {
+      setTitle('Results')
+      showResult()
+      hideContent()
+      showBtn1()
+      hideBtn2()
+      setBtn1('New game')
+      setBtn2('')
+      btn1Click(() => {
+        changeToState(0)
+      })
+    } else if (state == 0) {
       setTitle('Life Simulator')
       setContent(
         'Welcome to Life Simulator game.',
         'Press <strong>start</strong> to begin.',
       )
+      hideResult()
+      showContent()
       showBtn1()
       hideBtn2()
       setBtn1("Start")
       setBtn2("")
       btn1Click(() => {
+        addResult("Born in Thailand.")
         changeToState(1)
       })
     } else if (state == 1) {
@@ -50,7 +63,6 @@ $(document).ready(function () {
       btn1Click(() => {
         changeToState(2)
       })
-      addResult("Born in Thailand.")
     } else if (state == 2) {
       setTitle("Ages 3")
       setContent(
@@ -62,9 +74,11 @@ $(document).ready(function () {
       setBtn1('Burst cry!!!')
       setBtn2('Do nothing')
       btn1Click(() => {
+        addResult('Break mom\'s eardrum when hungry at ages 3.')
         changeToState(3.1)
       })
       btn2Click(() => {
+        addResult('Almost got starve to death at ages 3.')
         changeToState(3.2)
       })
     } else if (state == 3.1) {
@@ -80,7 +94,6 @@ $(document).ready(function () {
       btn1Click(() => {
         changeToState(4)
       })
-      addResult('Break mom\'s eardrum when hungry at ages 3.')
     } else if (state == 3.2) {
       setTitle("Ages 3")
       setContent(
@@ -94,7 +107,6 @@ $(document).ready(function () {
       btn1Click(() => {
         changeToState(4)
       })
-      addResult('Almost got starve to death at ages 3.')
     } else if (state == 4) {
       setTitle("Ages 8")
       setContent(
@@ -108,9 +120,11 @@ $(document).ready(function () {
       setBtn1('Call for a police')
       setBtn2('Run away')
       btn1Click(() => {
+        addResult('Died at ages 8. Cause of death: Devoured by a huge python.')
         changeToState(5.1)
       })
       btn2Click(() => {
+        addResult('A huge python sneaks into house at ages 8, but it was caught by a police.')
         changeToState(5.2)
       })
     } else if (state == 5.1) {
@@ -123,12 +137,11 @@ $(document).ready(function () {
       )
       showBtn1()
       hideBtn2()
-      setBtn1('Restart')
+      setBtn1('See results')
       setBtn2('')
       btn1Click(() => {
-        changeToState(0)
+        changeToState(-1)
       })
-      addResult('Died at ages 8. Cause of death: Devoured by a huge python.')
     } else if (state == 5.2) {
       setTitle("Ages 8")
       setContent(
@@ -143,9 +156,9 @@ $(document).ready(function () {
       setBtn1('Continue')
       setBtn2('')
       btn1Click(() => {
+        addResult('Died at ages 10. Cause of death: Crashed by satellite.')
         changeToState(6)
       })
-      addResult('A huge python sneaks into house at ages 8, but it was caught by a police.')
     } else if (state == 6) {
       setTitle("The End")
       setContent(
@@ -157,12 +170,11 @@ $(document).ready(function () {
       )
       showBtn1()
       hideBtn2()
-      setBtn1('Restart')
+      setBtn1('See results')
       setBtn2('')
       btn1Click(() => {
-        changeToState(0)
+        changeToState(-1)
       })
-      addResult('Died at ages 10. Cause of death: Crashed by satellite.')
     }
   }
 
@@ -180,6 +192,14 @@ $(document).ready(function () {
     rests.forEach(rest => {
       $('#life-simulator #game-content').append(`<p>${rest}</p>`)
     })
+  }
+
+  const showContent = () => {
+    $('#life-simulator #game-content').show()
+  }
+
+  const hideContent = () => {
+    $('#life-simulator #game-content').hide()
   }
 
   const showBtn1 = () => {
@@ -215,7 +235,15 @@ $(document).ready(function () {
   }
 
   const addResult = res => {
-    result += `<p>${res}</p>`
+    $('#life-simulator #game-results').append(`<p>${res}</p>`)
+  }
+
+  const showResult = () => {
+    $('#life-simulator #game-results').show()
+  }
+
+  const hideResult = () => {
+    $('#life-simulator #game-results').hide()
   }
 
   run()
