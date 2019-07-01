@@ -33,6 +33,11 @@ class TweetsController < ApplicationController
     ).find(params[:id])
   end
 
+  def destroy
+    @tweet = current_user.tweets.find(params[:id]).destroy
+    redirect_to root_path
+  end
+
   private
 
   def tweets_params

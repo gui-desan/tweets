@@ -37,7 +37,18 @@ class Tweet < ApplicationRecord
       hash_tag.tag_count -= 1
       hash_tag.save
     end
+    unset_reply(replies)
     HashTag.where('tag_count = 0').destroy_all
-    save
+  end
+
+  def unset_reply(replies)
+    replies.each do |reply|
+      reply.content.gsub(/\B#\w*[a-zA-Z]+\w*/).uniq.map do |hash_tag|
+        hash_tag = HashTag.find_by(name: hash_tag)
+        hash_tag.tag_count -= 1
+        hash_tag.save
+      end
+      unset_reply(reply.replies)
+    end
   end
 end

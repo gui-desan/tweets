@@ -35,20 +35,34 @@
         </div>
       <% end %>
       <hr />
-      <% unless tweet.users.include?(current_user) %>
-        <%= link_to "Like", likes_create_path(tweet), method: :post, class: "text-danger" %>
-      <% else %>
-        <%= link_to "Unlike", likes_destroy_path(tweet), method: :delete, class: "text-danger" %>
-      <% end %>
-      <%= likes.size %>
+      <div class="d-flex">
+        <div>
+          <% unless tweet.users.include?(current_user) %>
+            <%= link_to "Like", likes_create_path(tweet), method: :post, class: "text-danger" %>
+          <% else %>
+            <%= link_to "Unlike", likes_destroy_path(tweet), method: :delete, class: "text-danger" %>
+          <% end %>
+          <%= likes.size %>
+        </div>
 
-      <%= link_to "Reply", replies_new_path(tweet), class: "text-primary ml-2" %>
-      <%= replies.size %>
+        <div>
+          <%= link_to "Reply", replies_new_path(tweet), class: "text-primary ml-2" %>
+          <%= replies.size %>
+        </div>
 
-      <% if reply.nil? %>
-        <%= link_to "Retweet", retweets_new_path(tweet), class: "text-success ml-2" %>
-        <%= retweets.size %>
-      <% end %>
+        <div>
+          <% if reply.nil? %>
+            <%= link_to "Retweet", retweets_new_path(tweet), class: "text-success ml-2" %>
+            <%= retweets.size %>
+          <% end %>
+        </div>
+
+        <div class="ml-auto">
+          <% if tweet.user == current_user %>
+            <%= link_to "Delete", tweets_destroy_path(tweet), method: :delete, class: "text-danger" %>
+          <% end %>
+        </div>
+      </div>
 
       <%=
         render "shared/tweets",
@@ -65,6 +79,10 @@
 <% end %>
 <% if tweets.empty? && layer.zero? %>
   <div class="h4 text-center">
-    So quiet here ฅ(Φ ω Φ)ฅ, let's tweet someting.
+    <% if current_page?(root_path) %>
+      So quiet here ฅ(Φ ω Φ)ฅ, let's tweet someting.
+    <% else %>
+      No recent tweets
+    <% end %>
   </div>
 <% end %>
