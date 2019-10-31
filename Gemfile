@@ -65,6 +65,6 @@ gem "bootstrap", "~> 4.3"
 
 gem "jquery-rails", "~> 4.3"
 
-gem "devise", "~> 4.6"
+gem "devise", "~> 4.7"
 
 gem "kaminari", "~> 1.1"
