@@ -67,4 +67,4 @@ gem "jquery-rails", "~> 4.3"
 
 gem "devise", "~> 4.6"
 
-gem "kaminari", "~> 1.1"
+gem "kaminari", "~> 1.2"
